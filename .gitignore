@@ -1,0 +1,7 @@
+# Dependency directories
+node_modules/
+
+server/frames/*
+server/videos/
+
+output.svg

@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+
+    height: 100vh;
+
+    display: grid;
+    place-items: center;
+}
+
+#calculator {
+    height: calc(100vh - 20px);
+    width: calc(100vw - 20px);
+}
+
+#resquest-button {
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    z-index: 2929;
+}
+
+#rerender {
+    position: absolute;
+    top: 75px;
+    right: 100px;
+    z-index: 2929;
+}
