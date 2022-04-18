@@ -14,10 +14,27 @@
 </head>
 <body>
 
-    <div id="calculator"></div>
+    <div id="organizer">
+        <section id="top-bar">
+            <div id="progressbar">
+                <div id="progressbar-inner"></div>
+            </div>
+            <input type="text" id="frame-number-input" placeholder="input a frame # 1-231">
+            <button class="top-button" onclick="fetchRequest()">
+                <img src="assets/send.svg" alt="send-icon">
+            </button>
+            <button class="top-button" onclick="rendering()">
+                <img id="rerender-icon" class="larger-icon" src="assets/rerender.svg" alt="rerender-icon">
+            </button>
+        </section>
+        <article id="calculator-container">
+            <div id="calculator"></div>
+        </article>
+    </div>
+
     
-    <button id="resquest-button" onclick="fetchRequest()">request</button>
-    <button id="rerender" onclick="rendering()">rerender</button>
+    <!-- <button id="resquest-button" onclick="fetchRequest()">request</button>
+    <button id="rerender" onclick="rendering()">rerender</button> -->
 
 </body>
 </html>

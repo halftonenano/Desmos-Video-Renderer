@@ -1,2 +1,2 @@
-# Desmos-Image-Renderer
+# Desmos-Video-Renderer
  
