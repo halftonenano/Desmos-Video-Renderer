@@ -1,7 +1,6 @@
 const { PORT, CORS } = require('../config.json');
 
 const potrace = require('potrace');
-const fs = require('fs');
 
 const express = require('express');
 const cors = require('cors')
@@ -20,7 +19,6 @@ async function getThings(response, frameNumber) {
 
     trace.loadImage(`server/frames/out${frameNumber}.png`, (err) => {
         if (err) throw err;
-        // fs.writeFileSync('./output.svg', trace.getSVG());
     
         var lastPosx = '0';
         var lastPosy = '0';
@@ -138,28 +136,41 @@ async function getThings(response, frameNumber) {
 }
 
 
-
-
 app.use(express.static('client'));
 
-
-app.get('/grabbings', (req, res) => {
+app.get('/grabbings', async (req, res) => {
     console.log(req.query)
     
     const { frame } = req.query;
 
     if (!!frame) {
         let frameNumber = parseInt(frame);
-
+        
         if (0 < frameNumber < 232) {
             getThings(res, frameNumber);
         }
     }
+    
+});
 
-})
 
+app.use(express.json({limit: '2mb'}));
 
+app.get('/send', async (req, res) => {
+    const { data } = req.body;
+
+    if (!data) {
+        return res.status(400).send('Please include a request body in json');
+    }
+
+    var imageBuffer = new Buffer.from(data, 'base64');
+
+    trace.loadImage(imageBuffer, (err) => {
+        if (err) throw err;
+        res.send(trace.getSVG());
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`running on ${PORT}`);
-})
+});

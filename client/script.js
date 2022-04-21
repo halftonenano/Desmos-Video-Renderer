@@ -27,7 +27,6 @@ rerenderIcon.style.transform = 'rotate(0deg)';
 rendering();
 
 async function rendering() {
-    // console.log(rerenderIcon.style.transform.match(/\d+/g))
     rerenderIcon.style.transform = `rotate(-${parseInt(rerenderIcon.style.transform.match(/\d+/g)[0])+540}deg)`;
     
     if (currentFrame < frames.length-1) {
@@ -48,8 +47,6 @@ async function rendering() {
         //     calculator.removeExpression({ id: expression.id });
         // }
 
-        // const newDefaultState = calculator.getState();
-        // calculator.setDefaultState(newDefaultState);
         calculator.setBlank();
 
         console.log(parseInt(document.querySelector('.dcg-exppanel-outer').style.width));
@@ -77,13 +74,13 @@ async function rendering() {
 
 }
 
-var changed = 0;
+// var changed = 0;
 
-calculator.observeEvent('change', function() {
-    console.log('Change occurred');
-    // changed++;
-    // status.textContent = `${changed}%`;
-});
+// calculator.observeEvent('change', function() {
+//     console.log('Change occurred');
+//     // changed++;
+//     // status.textContent = `${changed}%`;
+// });
 
 const frameInput = document.getElementById('frame-number-input');
 
@@ -96,4 +93,37 @@ async function fetchRequest() {
         fetchedData = response;
     }
 
+}
+
+
+uploadFiles();
+function uploadFiles() {
+    'use strict'
+    var URL = window.URL || window.webkitURL;
+    // var displayMessage = function (message, isError) {
+    // var element = document.querySelector('#message');;
+    // element.innerHTML = message;
+    // element.className = isError ? 'error' : 'info';
+    // }
+    var playSelectedFile = function (event) {
+        var file = this.files[0];
+
+        var type = file.type;
+        console.log(type);
+
+        var fileURL = URL.createObjectURL(file);
+
+        var reader = new FileReader();
+        
+        reader.onload = function () {
+            let base64String = reader.result.replace("data:", "")
+            .replace(/^.+,/, "");
+            
+            console.log(base64String);
+            // console.log(reader.result);
+        }
+        reader.readAsDataURL(file);
+    }
+    var inputNode = document.getElementById('image-input');
+    inputNode.addEventListener('change', playSelectedFile, false);
 }
