@@ -83,16 +83,34 @@ async function rendering() {
 // });
 
 const frameInput = document.getElementById('frame-number-input');
+var imgConverted = {};
 
 async function fetchRequest() {
+    if (imgConverted.data) {
+        status.style.width = '5%';
+        const response = await $.ajax({
+                url: 'http://localhost:3000/send',
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    imgHeight: '1080',
+                    imgWidth: '1920',
+                    data: imgConverted.data
+                })
+            });
+        console.log(response);
+        fetchedData = response;
+        status.style.width = '20%';
+    }
+
     if (!isNaN(frameInput.value) && frameInput.value.length > 0) {
         status.style.width = '5%';
         const response = await $.get(`http://localhost:3000/grabbings?frame=${parseInt(frameInput.value)}`);
-        status.style.width = '20%';
         console.log(response);
         fetchedData = response;
+        status.style.width = '20%';
     }
-
 }
 
 
@@ -111,7 +129,7 @@ function uploadFiles() {
         var type = file.type;
         console.log(type);
 
-        var fileURL = URL.createObjectURL(file);
+        // var fileURL = URL.createObjectURL(file);
 
         var reader = new FileReader();
         
@@ -120,6 +138,9 @@ function uploadFiles() {
             .replace(/^.+,/, "");
             
             console.log(base64String);
+
+            imgConverted.data = base64String;
+
             // console.log(reader.result);
         }
         reader.readAsDataURL(file);
