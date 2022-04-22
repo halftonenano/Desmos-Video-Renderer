@@ -64,6 +64,8 @@ async function rendering() {
 
         }
 
+        console.log(fetchedData.length);
+
         for (i=0; i<fetchedData.length; i++) {
             calculator.setExpression({ id: `das${i}`, latex: fetchedData[i], color: '#000' });
         }
@@ -76,11 +78,11 @@ async function rendering() {
 
 // var changed = 0;
 
-// calculator.observeEvent('change', function() {
-//     console.log('Change occurred');
-//     // changed++;
-//     // status.textContent = `${changed}%`;
-// });
+calculator.observeEvent('change', function() {
+    console.log('Change occurred');
+    // changed++;
+    // status.textContent = `${changed}%`;
+});
 
 const frameInput = document.getElementById('frame-number-input');
 var imgConverted = {};
@@ -147,4 +149,19 @@ function uploadFiles() {
     }
     var inputNode = document.getElementById('image-input');
     inputNode.addEventListener('change', playSelectedFile, false);
+}
+
+const screenshotTarget = document.body;
+async function saveScreenshot() {
+    html2canvas(screenshotTarget).then((canvas) => {
+        const base64image = canvas.toDataURL("image/png");
+
+        var link = document.createElement("a");
+
+        // document.body.appendChild(link); // for Firefox
+
+        link.setAttribute("href", base64image);
+        link.setAttribute("download", `rickroll/out${frameInput.value}`);
+        link.click();
+    });
 }

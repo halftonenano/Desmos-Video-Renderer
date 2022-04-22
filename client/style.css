@@ -43,6 +43,10 @@ body {
     /* overflow: hidden; */
 }
 
+#bottom-bar {
+    display: flex;
+}
+
 #progressbar {
     height: 10px;
     width: 100%;

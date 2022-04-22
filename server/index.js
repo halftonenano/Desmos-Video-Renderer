@@ -11,12 +11,10 @@ app.use(cors({
     optionsSuccessStatus: 200
 }))
 
-var trace = new potrace.Potrace({ turdSize: 50 });
-
 async function getThings(response, frameNumber) {
-
+    var trace = new potrace.Potrace({ turdSize: 50 });
+    
     // console.log('-=-=-=-=-=-=-=-=-\n-=-=-=-=-=-=-=-=-\n-=-=-=-=-=-=-=-=-')
-
     trace.loadImage(`server/frames/out${frameNumber}.png`, (err) => {
         if (err) throw err;
     
@@ -256,11 +254,17 @@ app.post('/send', async (req, res) => {
 
     var imageBuffer = new Buffer.from(data, 'base64');
 
-    trace.loadImage(imageBuffer, (err) => {
+    potrace.trace(imageBuffer, (err, svg) => {
         if (err) throw err;
 
-        pathToLatex(trace.getPathTag(), res);
+        pathToLatex(svg, res);
     });
+
+    // trace.loadImage(imageBuffer, (err) => {
+    //     if (err) throw err;
+
+    //     pathToLatex(trace.getPathTag(), res);
+    // });
 });
 
 app.listen(PORT, () => {
