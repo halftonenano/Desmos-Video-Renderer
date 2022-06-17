@@ -91,7 +91,7 @@ async function fetchRequest() {
     if (imgConverted.data) {
         status.style.width = '5%';
         const response = await $.ajax({
-                url: 'http://localhost:3000/send',
+                url: '/send',
                 method: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
@@ -108,7 +108,7 @@ async function fetchRequest() {
 
     if (!isNaN(frameInput.value) && frameInput.value.length > 0) {
         status.style.width = '5%';
-        const response = await $.get(`http://localhost:3000/grabbings?frame=${parseInt(frameInput.value)}`);
+        const response = await $.get(`/grabbings?frame=${parseInt(frameInput.value)}`);
         console.log(response);
         fetchedData = response;
         status.style.width = '20%';

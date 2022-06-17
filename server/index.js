@@ -35,15 +35,8 @@ async function getThings(response, frameNumber) {
     
         var latexList = [];
 
-        // for (i=1; i<150; i++) {
         for (i=1; i<splited.length; i++) {
             let cPoints = splited[i].split(', ');
-
-            // console.log(cPoints);
-
-            if (i === 0) {
-
-            }
     
             cx0 = lastPosx;
             cy0 = lastPosy;
@@ -223,7 +216,6 @@ async function pathToLatex(pathTag, response) {
             `(1-t)((1-t)((1-t)${cy0}+t${cy1})+t((1-t)${cy1}+t${cy2}))+t((1-t)((1-t)${cy1}+t${cy2})+t((1-t)${cy2}+t${cy3})))`);
     }
     response.send(latexList);
-    // return latexList;
 }
 
 
@@ -257,7 +249,9 @@ app.post('/send', async (req, res) => {
     potrace.trace(imageBuffer, (err, svg) => {
         if (err) throw err;
 
-        pathToLatex(svg, res);
+        res.send(svg);
+
+        // pathToLatex(svg, res);
     });
 
     // trace.loadImage(imageBuffer, (err) => {
